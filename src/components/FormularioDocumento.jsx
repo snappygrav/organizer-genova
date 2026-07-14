@@ -24,7 +24,7 @@ export default function FormularioDocumento() {
             [name]: value   // Reemplaza solo el campo que cambió
         });
     };
-
+    const saldoPendiente = Number(datos.importeTotal) - Number(datos.importeAdelanto);
     return (
         <form>
             {/* Acá tengo que ir poniendo los <input>, <select> y demás para ir llenando el formulario */}
@@ -61,7 +61,7 @@ export default function FormularioDocumento() {
                 <div>
                     <hr />
                     <label>
-                        Porcentaje del adelanto: <input type="number" name="porcentajeAdelanto" /> o importe del adelanto: <input type="number" name="importeAdelanto" value={datos.importeAdelanto} onChange={handleChange}/>
+                         Importe del adelanto: <input type="number" name="importeAdelanto" value={datos.importeAdelanto} onChange={handleChange}/>
                     </label>
                     <hr />
                     <label>
@@ -73,7 +73,7 @@ export default function FormularioDocumento() {
                     </label>
                     <hr />
                     <label>
-                        ACÁ VA EL CÁLCULO DEL IMPORTE A PAGAR COMO SALDO - IMPORTE TOTAL MENOS ADELANTO
+                        Saldo pendiente a pagar: <strong>${saldoPendiente}</strong>
                     </label>
                 </div>
             )}
