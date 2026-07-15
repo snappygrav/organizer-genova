@@ -10,11 +10,11 @@ export default function FormularioDocumento() {
     const [datos, setDatos] = useState({
         edifName: '',
         proovName: '',
-        tipoDocumento: '',
+        tipoDocumento: 'tipoFactura',
         importeTotal: '',
         importeAdelanto: '',
         autorizadoPor: '',
-        estadoDocumento: 'Impago'
+        estadoDocumento: 'docImpago'
     });
 
     const handleChange = (e) => {
@@ -24,28 +24,40 @@ export default function FormularioDocumento() {
             [name]: value   // Reemplaza solo el campo que cambió
         });
     };
+
+    const handleSubmit = (e) => {
+        e.preventDefault(); // <-- La línea mágica que evita que la página se recargue
+
+        // Por ahora, solo vamos a mostrar en la consola lo que el usuario escribió
+        console.log("¡Formulario enviado con éxito!", datos);
+
+        // Acá también vamos a querer saber si tenía adelanto o no para guardar el estado final
+        console.log("¿Tenía adelanto?:", tieneAdelanto);
+    };
+
+    // cálculo del saldo pendiente
     const saldoPendiente = Number(datos.importeTotal) - Number(datos.importeAdelanto);
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             {/* Acá tengo que ir poniendo los <input>, <select> y demás para ir llenando el formulario */}
             <h2>Nuevo Documento</h2>
             <label>
-                Nombre del edificio: <input name="edifName" value={datos.edifName} onChange={handleChange}/>
+                Nombre del edificio: <input name="edifName" value={datos.edifName} onChange={handleChange} />
             </label>
             <hr />
             <label>
-                Nombre del proveedor: <input name="proovName" value={datos.proovName} onChange={handleChange}/>
+                Nombre del proveedor: <input name="proovName" value={datos.proovName} onChange={handleChange} />
             </label>
             <hr />
             <label>
-                Tipo de documento: <select name="seleccionTipoDocumento">
+                Tipo de documento: <select name="tipoDocumento" value={datos.tipoDocumento} onChange={handleChange}>
                     <option value="tipoFactura">Factura</option>
                     <option value="tipoPresupuesto">Presupuesto</option>
                 </select>
             </label>
             <hr />
             <label>
-                Importe total: <input type="number" name="importeTotal" value={datos.importeTotal} onChange={handleChange}/>
+                Importe total: <input type="number" name="importeTotal" value={datos.importeTotal} onChange={handleChange} />
             </label>
             <hr />
             <label>
@@ -61,7 +73,7 @@ export default function FormularioDocumento() {
                 <div>
                     <hr />
                     <label>
-                         Importe del adelanto: <input type="number" name="importeAdelanto" value={datos.importeAdelanto} onChange={handleChange}/>
+                        Importe del adelanto: <input type="number" name="importeAdelanto" value={datos.importeAdelanto} onChange={handleChange} />
                     </label>
                     <hr />
                     <label>
@@ -69,7 +81,7 @@ export default function FormularioDocumento() {
                     </label>
                     <hr />
                     <label>
-                        Fecha de pago del saldo: <input type="date" name="fechaPagoSaldo" /> o indicar cuándo se paga el saldo: <input type="text" name="textPagoSaldo" />
+                        Fecha de pago del saldo: <input type="date" name="fechaPagoSaldo" /> o indicar cuándo se paga el saldo: <input type="text" name="textPagoSaldo" placeholder='Al término de los trabajos.' />
                     </label>
                     <hr />
                     <label>
@@ -79,12 +91,12 @@ export default function FormularioDocumento() {
             )}
             <hr />
             <label>
-                Autorizado por: <input name="autorizadoPor" />
+                Autorizado por: <input name="autorizadoPor" value={datos.autorizadoPor} onChange={handleChange}/>
             </label>
             <hr />
             <label>
                 Estado del documento:
-                <select>
+                <select name="estadoDocumento" value={datos.estadoDocumento} onChange={handleChange}>
                     <option value="docImpago">Impago</option>
                     <option value="docPago">Pago</option>
                     <option value="saldoPendiente">Saldo pendiente</option>
