@@ -42,6 +42,7 @@ export default function FormularioDocumento({ alEnviar }) {
             importeTotal: '',
             importeAdelanto: '',
             autorizadoPor: '',
+            fechaPagoAdelanto: '',
             estadoDocumento: 'docImpago'
         });
         setTieneAdelanto(false);
@@ -90,7 +91,7 @@ export default function FormularioDocumento({ alEnviar }) {
                     </label>
                     <hr />
                     <label>
-                        Fecha del pago del adelanto: <input type="date" name="fechaPagoAdelanto" />
+                        Fecha del pago del adelanto: <input type="date" name="fechaPagoAdelanto" value={datos.fechaPagoAdelanto} onChange={handleChange} />
                     </label>
                     <hr />
                     <label>

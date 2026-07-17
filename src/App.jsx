@@ -40,6 +40,7 @@ export default function App() {
               <th>Saldo</th>
               <th>Estado</th>
               <th>Autorizó</th>
+              <th>Fecha de pago</th>
             </tr>
           </thead>
           <tbody>
@@ -54,6 +55,7 @@ export default function App() {
                 <td>${doc.importeTotal-doc.importeAdelanto}</td>
                 <td>{doc.estadoDocumento === 'docImpago' ? 'Impago' : doc.estadoDocumento === 'docPago' ? 'Pago' : 'Saldo pendiente'}</td>
                 <td>{doc.autorizadoPor}</td>
+                <td>{doc.fechaPagoAdelanto}</td>
               </tr>
             ))}
           </tbody>
