@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-export default function FormularioDocumento() {
-    // Acá van declaradas las useState para los campos
+export default function FormularioDocumento({ alEnviar }) {
 
     // Estado para el checkbox (empieza en false porque usualmente se paga el total)
     const [tieneAdelanto, setTieneAdelanto] = useState(false);
@@ -28,15 +27,29 @@ export default function FormularioDocumento() {
     const handleSubmit = (e) => {
         e.preventDefault(); // <-- La línea mágica que evita que la página se recargue
 
-        // Por ahora, solo vamos a mostrar en la consola lo que el usuario escribió
-        console.log("¡Formulario enviado con éxito!", datos);
+        const saldoCalculado = Number(datos.importeTotal) - Number(datos.importeAdelanto);
 
-        // Acá también vamos a querer saber si tenía adelanto o no para guardar el estado final
-        console.log("¿Tenía adelanto?:", tieneAdelanto);
+        const documentoFinal = {
+            ...datos,
+            tieneAdelanto,
+            saldoPendiente: tieneAdelanto ? saldoCalculado : 0
+        };
+        alEnviar(documentoFinal);
+        setDatos({
+            edifName: '',
+            proovName: '',
+            tipoDocumento: 'tipoFactura',
+            importeTotal: '',
+            importeAdelanto: '',
+            autorizadoPor: '',
+            estadoDocumento: 'docImpago'
+        });
+        setTieneAdelanto(false);
     };
 
-    // cálculo del saldo pendiente
-    const saldoPendiente = Number(datos.importeTotal) - Number(datos.importeAdelanto);
+        //cálculo del saldo pendiente
+        const saldoPendiente = Number(datos.importeTotal) - Number(datos.importeAdelanto);
+
     return (
         <form onSubmit={handleSubmit}>
             {/* Acá tengo que ir poniendo los <input>, <select> y demás para ir llenando el formulario */}
